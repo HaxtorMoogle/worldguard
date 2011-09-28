@@ -3,7 +3,7 @@ package com.sk89q.worldguard.bukkit;
 import java.util.Set;
 
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -14,23 +14,13 @@ import org.bukkit.plugin.Plugin;
 *
 * @author sk89q
 */
-class LegacyConsoleSender implements CommandSender {
-    private Server server;
-
+class LegacyConsoleSender extends ConsoleCommandSender {
     public LegacyConsoleSender(Server server) {
-        this.server = server;
+        super(server);
     }
 
     public void sendMessage(String message) {
         WorldGuardPlugin.logger.info(message);
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public String getName() {
-        return "CONSOLE";
     }
 
     public boolean isPermissionSet(String name) {
@@ -76,10 +66,6 @@ class LegacyConsoleSender implements CommandSender {
 
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
         throw new UnsupportedOperationException("Fake legacy console command sender does not support this");
-    }
-
-    public boolean isOp() {
-        return true;
     }
 
     public void setOp(boolean value) {
